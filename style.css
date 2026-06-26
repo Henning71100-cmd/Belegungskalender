@@ -1,0 +1,59 @@
+:root{
+  --bg:#f6f2ea;
+  --card:#fffdf9;
+  --ink:#19323c;
+  --muted:#6d7b80;
+  --line:#e6ded1;
+  --free:#dff3e8;
+  --freeText:#17663a;
+  --booked:#f7dada;
+  --bookedText:#942424;
+  --change:#fff0bd;
+  --changeText:#83600a;
+  --past:#eeeeee;
+  --pastText:#999;
+  --today:#1f6f8b;
+  --shadow:0 18px 45px rgba(25,50,60,.10);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(69,135,152,.14), transparent 34rem),
+    linear-gradient(180deg,#fbf8f1,var(--bg));
+}
+.page{width:min(780px,calc(100% - 28px)); margin:0 auto; padding:34px 0 28px}
+.hero{background:var(--card); border:1px solid var(--line); border-radius:24px; padding:30px 22px; text-align:center; box-shadow:var(--shadow)}
+h1{margin:0; font-size:clamp(1.7rem,4vw,2.45rem); line-height:1.1; letter-spacing:-.03em}
+.hero p{margin:12px auto 0; max-width:35rem; color:var(--muted); line-height:1.5}
+.legend{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:18px 0; color:var(--muted); font-size:.95rem}
+.legend span{display:inline-flex; align-items:center; gap:7px; background:rgba(255,255,255,.7); border:1px solid var(--line); padding:8px 11px; border-radius:999px}
+.dot{width:13px; height:13px; border-radius:50%; display:inline-block; border:1px solid rgba(0,0,0,.08)}
+.dot.free{background:var(--free)} .dot.booked{background:var(--booked)} .dot.changeover{background:var(--change)} .dot.past{background:var(--past)}
+.status{margin:0 0 16px; padding:13px 16px; border-radius:16px; background:rgba(255,255,255,.72); border:1px solid var(--line); color:var(--muted); text-align:center}
+.status.error{color:#942424; background:#fff0f0; border-color:#f2c6c6}
+.calendar{display:grid; gap:18px}
+.month{background:var(--card); border:1px solid var(--line); border-radius:24px; padding:18px; box-shadow:var(--shadow)}
+.month h2{margin:0 0 15px; text-align:center; font-size:1.25rem; letter-spacing:-.02em}
+.weekdays,.days{display:grid; grid-template-columns:repeat(7,1fr); gap:6px}
+.weekdays div{text-align:center; font-weight:700; color:var(--muted); font-size:.82rem; padding-bottom:4px}
+.day{min-height:48px; border:1px solid var(--line); border-radius:14px; display:flex; align-items:center; justify-content:center; font-weight:700; position:relative; background:#fff; color:var(--ink)}
+.day.empty{background:transparent; border-color:transparent}
+.day.free{background:var(--free); color:var(--freeText)}
+.day.booked{background:var(--booked); color:var(--bookedText)}
+.day.changeover{background:var(--change); color:var(--changeText)}
+.day.past{background:var(--past); color:var(--pastText)}
+.day.today{outline:2px solid var(--today); outline-offset:2px}
+.day small{position:absolute; bottom:4px; font-size:.55rem; font-weight:700; opacity:.7; letter-spacing:.02em}
+.footer{text-align:center; color:var(--muted); margin-top:22px; font-size:.9rem; line-height:1.5}
+.footer a{color:var(--ink); text-underline-offset:3px}
+@media (max-width:520px){
+  .page{width:min(100% - 18px,780px); padding-top:18px}
+  .hero{padding:24px 15px; border-radius:20px}
+  .month{padding:13px; border-radius:20px}
+  .weekdays,.days{gap:4px}
+  .day{min-height:40px; border-radius:11px; font-size:.9rem}
+  .legend{justify-content:flex-start}
+}
