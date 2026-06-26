@@ -5,138 +5,113 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Verfügbarkeitskalender – Hafenglück</title>
   <style>
-    :root{
-      --bg:#f6f3ee;--card:#fff;--text:#1f2933;--muted:#6b7280;--line:#e5e7eb;
-      --free:#dff3e6;--freeText:#166534;--booked:#fee2e2;--bookedText:#991b1b;
-      --change:#fef3c7;--changeText:#92400e;--past:#eeeeee;--pastText:#9ca3af;
-      --accent:#0f5f6f;--accent2:#d9edf1;--shadow:0 14px 40px rgba(31,41,51,.08);
-    }
-    *{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(180deg,#eef8fa 0%,var(--bg) 220px);color:var(--text)}
-    .wrap{max-width:760px;margin:0 auto;padding:34px 16px 28px}.hero{text-align:center;margin-bottom:20px}.hero h1{font-size:clamp(28px,5vw,42px);line-height:1.1;margin:0 0 10px;color:#11343b}.hero p{margin:0 auto;color:var(--muted);max-width:520px;font-size:15px}.panel{background:var(--card);border:1px solid rgba(15,95,111,.12);border-radius:26px;box-shadow:var(--shadow);padding:18px}.topbar{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap}.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted)}.pill{display:inline-flex;align-items:center;gap:6px}.dot{width:12px;height:12px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,.08)}.freeDot{background:var(--free)}.bookedDot{background:var(--booked)}.changeDot{background:var(--change)}.pastDot{background:var(--past)}#status{font-size:13px;color:var(--muted)}#calendar{display:grid;gap:16px}.month{border:1px solid var(--line);border-radius:20px;padding:15px;background:#fff}.month h2{font-size:20px;margin:0 0 14px;color:#11343b;text-transform:capitalize}.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.weekday{text-align:center;font-size:12px;font-weight:700;color:var(--muted);padding:4px 0}.day{min-height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;border:1px solid transparent}.free{background:var(--free);color:var(--freeText)}.booked{background:var(--booked);color:var(--bookedText)}.changeover{background:var(--change);color:var(--changeText)}.past{background:var(--past);color:var(--pastText);font-weight:600}.today{outline:2px solid var(--accent);outline-offset:2px}.loading,.error{text-align:center;padding:28px;color:var(--muted)}.error{color:var(--bookedText);background:#fff7f7;border-radius:16px}.footer{margin:18px auto 0;text-align:center;color:var(--muted);font-size:13px;line-height:1.6}.footer a{color:var(--accent);text-decoration:none}.footer a:hover{text-decoration:underline}@media (max-width:520px){.wrap{padding:24px 10px}.panel{padding:12px;border-radius:20px}.month{padding:11px;border-radius:18px}.grid{gap:5px}.day{min-height:39px;border-radius:11px;font-size:13px}.topbar{display:block}.legend{margin-top:10px}.hero p{font-size:14px}}
+    :root{--bg:#f7f4ef;--card:#fff;--text:#1f2933;--muted:#6b7280;--border:#e5e0d8;--free:#78b96b;--booked:#c95b55;--past:#d7d7d7;--accent:#174a63;--sand:#d9b98c;}
+    *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#f5efe5,#fbfaf7);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--text)}
+    .wrap{max-width:820px;margin:0 auto;padding:34px 18px 26px} header{text-align:center;margin-bottom:20px} h1{font-size:clamp(26px,4vw,38px);line-height:1.15;margin:0;color:var(--accent);letter-spacing:-.03em} .sub{margin:10px auto 0;max-width:520px;color:var(--muted);font-size:15px;line-height:1.5}
+    .legend{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:18px 0 24px}.pill{display:flex;align-items:center;gap:7px;border:1px solid var(--border);background:rgba(255,255,255,.75);border-radius:999px;padding:8px 11px;font-size:13px}.sw{width:18px;height:18px;border-radius:5px;border:1px solid rgba(0,0,0,.08)}.free{background:var(--free)}.booked{background:var(--booked)}.past{background:var(--past)}.arrival{background:linear-gradient(135deg,var(--free) 0 50%,var(--booked) 50% 100%)}.departure{background:linear-gradient(135deg,var(--booked) 0 50%,var(--free) 50% 100%)}
+    #status{text-align:center;color:var(--muted);font-size:13px;margin-bottom:18px}.months{display:grid;gap:18px}.month{background:rgba(255,255,255,.92);border:1px solid var(--border);border-radius:22px;box-shadow:0 16px 40px rgba(31,41,51,.08);padding:18px}.month h2{text-align:center;margin:0 0 15px;color:var(--accent);font-size:22px;text-transform:capitalize}.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.weekday{text-align:center;color:var(--muted);font-weight:700;font-size:12px;padding:4px 0}.day{aspect-ratio:1/1;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;border:1px solid rgba(0,0,0,.06);position:relative;overflow:hidden}.day span{position:relative;z-index:2;text-shadow:0 1px 1px rgba(255,255,255,.35)}.day.free{background:var(--free);color:#123}.day.booked{background:var(--booked);color:#fff}.day.past{background:var(--past);color:#777}.day.arrival{background:linear-gradient(135deg,var(--free) 0 49.5%,rgba(255,255,255,.85) 50%,var(--booked) 50.5% 100%);color:#1f2933}.day.departure{background:linear-gradient(135deg,var(--booked) 0 49.5%,rgba(255,255,255,.85) 50%,var(--free) 50.5% 100%);color:#1f2933}.day.today{outline:3px solid var(--sand);outline-offset:2px}
+    .note{margin:20px auto 0;max-width:650px;color:var(--muted);font-size:13px;line-height:1.5;text-align:center}.footer{border-top:1px solid var(--border);margin-top:28px;padding-top:18px;text-align:center;color:var(--muted);font-size:13px}.footer a{color:var(--accent);text-decoration:none;font-weight:700}.footer a:hover{text-decoration:underline}.error{background:#fff4f4;border:1px solid #f0c7c7;color:#8a2f2f;border-radius:14px;padding:14px;text-align:center}
+    @media (min-width:720px){.months{grid-template-columns:1fr 1fr}.month{padding:20px}.day{font-size:15px}}
   </style>
 </head>
 <body>
   <main class="wrap">
-    <header class="hero">
+    <header>
       <h1>Verfügbarkeitskalender – Hafenglück</h1>
-      <p>Prüfen Sie hier die aktuelle Verfügbarkeit unserer Ferienwohnung.</p>
+      <p class="sub">Prüfen Sie hier die aktuelle Verfügbarkeit unserer Ferienwohnung.</p>
     </header>
-    <section class="panel">
-      <div class="topbar">
-        <div id="status">Der Kalender wird geladen...</div>
-        <div class="legend" aria-label="Legende">
-          <span class="pill"><span class="dot freeDot"></span>Frei</span>
-          <span class="pill"><span class="dot bookedDot"></span>Belegt</span>
-          <span class="pill"><span class="dot changeDot"></span>An-/Abreise</span>
-          <span class="pill"><span class="dot pastDot"></span>Vergangen</span>
-        </div>
-      </div>
-      <div id="calendar"><div class="loading">Der Kalender wird geladen...</div></div>
-    </section>
+    <div class="legend" aria-label="Legende">
+      <div class="pill"><span class="sw free"></span> Frei</div>
+      <div class="pill"><span class="sw booked"></span> Belegt</div>
+      <div class="pill"><span class="sw arrival"></span> Anreise</div>
+      <div class="pill"><span class="sw departure"></span> Abreise</div>
+      <div class="pill"><span class="sw past"></span> Vergangen</div>
+    </div>
+    <div id="status">Der Kalender wird geladen…</div>
+    <section id="calendar" class="months"></section>
+    <p class="note">Diagonal markierte Tage zeigen Wechselmöglichkeiten: grün/rot = Anreise, rot/grün = Abreise.</p>
     <footer class="footer">
       <div>Synchronisiert mit Airbnb, Booking.com und FeWo-direkt.</div>
-      <div><a href="https://hafengluck-moderne-ferienwohnung-direkt-am-hafen.jimdosite.com/impressum" target="_blank" rel="noopener">Impressum</a> · <a href="https://hafengluck-moderne-ferienwohnung-direkt-am-hafen.jimdosite.com/datenschutz" target="_blank" rel="noopener">Datenschutz</a></div>
+      <div style="margin-top:8px"><a href="https://hafengluck-moderne-ferienwohnung-direkt-am-hafen.jimdosite.com/impressum" target="_blank" rel="noopener">Impressum</a> · <a href="https://hafengluck-moderne-ferienwohnung-direkt-am-hafen.jimdosite.com/datenschutz" target="_blank" rel="noopener">Datenschutz</a></div>
     </footer>
   </main>
-<script>
-const WORKER_URL = "https://hafenglueck-belegungskalender.henning71100.workers.dev/";
-const MONTHS_TO_SHOW = 12;
+  <script>
+    const WORKER_URL = "https://hafenglueck-belegungskalender.henning71100.workers.dev/";
+    const MONTHS_TO_SHOW = 12;
+    const calendar = document.getElementById('calendar');
+    const statusEl = document.getElementById('status');
 
-const $calendar = document.getElementById("calendar");
-const $status = document.getElementById("status");
+    loadCalendar();
 
-loadCalendar();
+    async function loadCalendar(){
+      try{
+        const res = await fetch(WORKER_URL, { cache: 'no-store' });
+        if(!res.ok) throw new Error('Kalenderdaten konnten nicht geladen werden.');
+        const data = await res.json();
+        if(!data.ok) throw new Error('Kalenderdaten konnten nicht verarbeitet werden.');
+        const events = (data.events || []).map(e => ({ start:e.start, end:e.end, source:e.source || '', summary:e.summary || '' }));
+        render(events);
+        const loaded = (data.calendars || []).map(c => `${c.source}: ${c.count}`).join(' · ');
+        statusEl.textContent = `Aktualisiert: ${new Date(data.updatedAt).toLocaleString('de-DE')} · ${loaded}`;
+      }catch(err){
+        calendar.innerHTML = `<div class="error">Der Kalender konnte nicht geladen werden.<br>${escapeHtml(err.message)}</div>`;
+        statusEl.textContent = 'Fehler beim Laden';
+      }
+    }
 
-async function loadCalendar(){
-  try{
-    const res = await fetch(WORKER_URL, { cache: "no-store" });
-    if(!res.ok) throw new Error("Worker antwortet nicht: " + res.status);
-    const data = await res.json();
-    if(!data.ok) throw new Error("Kalenderdaten konnten nicht geladen werden.");
-    const events = (data.events || []).map(e => ({ start:e.start, end:e.end, source:e.source || "Kalender" }))
-      .filter(e => /^\d{4}-\d{2}-\d{2}$/.test(e.start) && /^\d{4}-\d{2}-\d{2}$/.test(e.end));
-    render(events, data);
-  }catch(err){
-    console.error(err);
-    $calendar.innerHTML = `<div class="error">Der Kalender konnte nicht geladen werden.<br>${escapeHTML(err.message)}</div>`;
-    $status.textContent = "Fehler beim Laden";
-  }
-}
+    function render(events){
+      calendar.innerHTML = '';
+      const start = new Date();
+      start.setDate(1);
+      for(let i=0;i<MONTHS_TO_SHOW;i++){
+        const d = new Date(start.getFullYear(), start.getMonth()+i, 1);
+        calendar.appendChild(renderMonth(d, events));
+      }
+    }
 
-function render(events, data){
-  $calendar.innerHTML = "";
-  const now = new Date();
-  const updated = data.updatedAt ? new Date(data.updatedAt) : now;
-  const counts = (data.calendars || []).map(c => `${c.source}: ${c.count}`).join(" · ");
-  $status.textContent = `Aktualisiert: ${updated.toLocaleString("de-DE", { dateStyle:"short", timeStyle:"short" })}${counts ? " · " + counts : ""}`;
-  const start = new Date(now.getFullYear(), now.getMonth(), 1);
-  for(let i=0;i<MONTHS_TO_SHOW;i++){
-    const d = new Date(start.getFullYear(), start.getMonth()+i, 1);
-    $calendar.appendChild(renderMonth(d, events));
-  }
-}
+    function renderMonth(date, events){
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const section = document.createElement('section');
+      section.className = 'month';
+      const title = document.createElement('h2');
+      title.textContent = date.toLocaleDateString('de-DE', { month:'long', year:'numeric' });
+      section.appendChild(title);
+      const grid = document.createElement('div');
+      grid.className = 'grid';
+      ['Mo','Di','Mi','Do','Fr','Sa','So'].forEach(w => {
+        const el = document.createElement('div'); el.className = 'weekday'; el.textContent = w; grid.appendChild(el);
+      });
+      const first = new Date(year, month, 1);
+      const offset = (first.getDay()+6)%7;
+      for(let i=0;i<offset;i++) grid.appendChild(document.createElement('div'));
+      const days = new Date(year, month+1, 0).getDate();
+      const today = stripTime(new Date());
+      for(let day=1; day<=days; day++){
+        const d = new Date(year, month, day);
+        const iso = toISO(d);
+        const cell = document.createElement('div');
+        cell.className = 'day';
+        cell.innerHTML = `<span>${day}</span>`;
+        if(+stripTime(d) === +today) cell.classList.add('today');
+        if(d < today){ cell.classList.add('past'); }
+        else if(isArrivalDay(iso, events)){ cell.classList.add('arrival'); }
+        else if(isDepartureDay(iso, events)){ cell.classList.add('departure'); }
+        else if(isBookedNight(iso, events)){ cell.classList.add('booked'); }
+        else { cell.classList.add('free'); }
+        grid.appendChild(cell);
+      }
+      section.appendChild(grid);
+      return section;
+    }
 
-function renderMonth(date, events){
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const section = document.createElement("section");
-  section.className = "month";
-  const title = document.createElement("h2");
-  title.textContent = date.toLocaleDateString("de-DE", { month:"long", year:"numeric" });
-  section.appendChild(title);
-  const grid = document.createElement("div");
-  grid.className = "grid";
-  ["Mo","Di","Mi","Do","Fr","Sa","So"].forEach(label => {
-    const el = document.createElement("div"); el.className = "weekday"; el.textContent = label; grid.appendChild(el);
-  });
-  const first = new Date(year, month, 1);
-  const offset = (first.getDay()+6)%7;
-  for(let i=0;i<offset;i++) grid.appendChild(document.createElement("div"));
-  const days = new Date(year, month+1, 0).getDate();
-  const today = startOfToday();
-  const todayISO = toISO(today);
-  for(let day=1; day<=days; day++){
-    const d = new Date(year, month, day);
-    const iso = toISO(d);
-    const cell = document.createElement("div");
-    cell.className = "day";
-    cell.textContent = day;
-    cell.title = statusLabel(iso, events, d, today);
-    if(iso === todayISO) cell.classList.add("today");
-    if(d < today) cell.classList.add("past");
-    else if(isChangeoverDay(iso, events)) cell.classList.add("changeover");
-    else if(isBookedNight(iso, events)) cell.classList.add("booked");
-    else cell.classList.add("free");
-    grid.appendChild(cell);
-  }
-  section.appendChild(grid);
-  return section;
-}
-
-function isBookedNight(iso, events){
-  return events.some(e => iso >= e.start && iso < e.end);
-}
-function isCheckoutDay(iso, events){
-  return events.some(e => iso === e.end);
-}
-function isCheckinDay(iso, events){
-  return events.some(e => iso === e.start);
-}
-function isChangeoverDay(iso, events){
-  return isCheckoutDay(iso, events) && !isBookedNight(iso, events);
-}
-function statusLabel(iso, events, dateObj, today){
-  if(dateObj < today) return "Vergangener Tag";
-  if(isChangeoverDay(iso, events)) return "Abreise / Anreise möglich";
-  if(isBookedNight(iso, events)) return isCheckinDay(iso, events) ? "Belegt / Anreise" : "Belegt";
-  return "Frei";
-}
-function startOfToday(){ const d = new Date(); d.setHours(0,0,0,0); return d; }
-function toISO(d){
-  const y=d.getFullYear(); const m=String(d.getMonth()+1).padStart(2,"0"); const day=String(d.getDate()).padStart(2,"0");
-  return `${y}-${m}-${day}`;
-}
-function escapeHTML(str){ return String(str).replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c])); }
-</script>
+    // Buchungslogik: iCal-Enddatum ist der Abreisetag und selbst nicht mehr als Nacht belegt.
+    function isBookedNight(date, events){ return events.some(e => date >= e.start && date < e.end); }
+    function isArrivalDay(date, events){ return events.some(e => date === e.start); }
+    function isDepartureDay(date, events){ return events.some(e => date === e.end) && !isArrivalDay(date, events); }
+    function toISO(d){ const y=d.getFullYear(); const m=String(d.getMonth()+1).padStart(2,'0'); const day=String(d.getDate()).padStart(2,'0'); return `${y}-${m}-${day}`; }
+    function stripTime(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+    function escapeHtml(str){ return String(str).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
+  </script>
 </body>
 </html>
